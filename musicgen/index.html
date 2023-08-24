@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>巴小赫</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      /* 居中所有元素 */
+    }
+
+    .cover img {
+      border-radius: 6px;
+      /* 设置圆角 */
+      width: 96%;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 10px;
+    }
+
+    .title {
+      text-align: left;
+      /* 标题左对齐 */
+      margin-bottom: 15px;
+      margin-left: 5px;
+      font-weight: 400;
+    }
+
+    .description,
+    .media-area,
+    .text-area,
+    .button-area {
+      margin-bottom: 15px;
+      margin-top: 20px;
+      font-size: smaller;
+      font-weight: 300;
+      /* 细体 */
+      color: #808080;
+      /* 灰色 */
+    }
+
+    .media-area audio,
+    .generated-music-list audio {
+      width: 96%;
+    }
+
+    .text-area textarea {
+      width: 96%;
+      height: 80px;
+    }
+
+    .button-area button {
+      width: 50%;
+      padding: 10px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      /* font-weight: 300; */
+
+
+    }
+
+    .generated-music-list {
+      display: flex;
+      overflow-x: auto;
+      justify-content: center;
+      /* 水平居中生成的音乐列表 */
+    }
+
+    .generated-music-list div {
+      margin-right: 10px;
+    }
+
+    .button-logo {
+      width: 20px;
+      /* 调整图标宽度 */
+      height: 20px;
+      /* 调整图标高度 */
+      vertical-align: middle;
+      /* 垂直居中 */
+      margin-right: 10px;
+      /* 在图标和文本之间添加一些空间 */
+    }
+
+    .upload-button {
+      display: flex;
+      /* 使用Flexbox布局 */
+      align-items: center;
+      /* 垂直居中内容 */
+      justify-content: center;
+      /* 水平居中内容 */
+      /* width: 100%; */
+      padding: 10px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="title">巴小赫</div>
+    <div class="cover">
+      <img src="icon.png" alt="封面" width="100%">
+    </div>
+    <div class="description">上传您喜欢的参考音乐</div>
+    <div class="button-area">
+      <button onclick="uploadReferenceMusic()">
+        <img src="uploadbtn.png" class="button-logo">选择音乐
+      </button>
+    </div>
+    <div class="media-area">
+      <audio controls id="referenceMusic"></audio>
+    </div>
+    <div class="description">描述您要生成的音乐</div>
+    <div class="text-area">
+      <textarea id="musicDescription" rows="4"></textarea>
+    </div>
+    <div class="description">点击生成 30s 音乐</div>
+    <div class="button-area">
+      <button onclick="generateMusic()">
+        <img src="musicbtn.png" class="button-logo">生成音乐
+      </button>
+    </div>
+    <div class="title">我的创作</div>
+    <div class="generated-music-list" id="generatedMusicList"></div>
+  </div>
+  <script>
+    function uploadReferenceMusic() {
+      // 调用外部接口上传参考音乐
+    }
+
+    function generateMusic() {
+      // 调用外部接口生成音乐
+      var musicDescription = document.getElementById('musicDescription').value;
+      var formData = new FormData();
+      formData.append('prompt', musicDescription);
+      formData.append('music', "");
+
+      fetch('https://7a88-35-227-104-7.ngrok-free.app/music', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          // 将生成的音乐添加到“我的创作”列表
+          console.log(data)
+        })
+        .catch(error => {
+          console.error('生成音乐出错:', error);
+        });
+    }
+  </script>
+</body>
+
+</html>
